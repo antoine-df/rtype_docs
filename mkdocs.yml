@@ -2,5 +2,7 @@ site_name: My Docs
 site_url: https://antoine-df.github.io/rtype_docs/
 nav:
     - Home: index.md
+    - Dev documentation : devDoc.md
+    - Protocol documentation : protocolDoc.md
     - About: about.md
 theme: readthedocs
