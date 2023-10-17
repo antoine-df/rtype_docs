@@ -10,4 +10,14 @@
          <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
+    <url>
+         <loc>https://antoine-df.github.io/rtype_docs/devDoc/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://antoine-df.github.io/rtype_docs/prototolDoc/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
 </urlset>
