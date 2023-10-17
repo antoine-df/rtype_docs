@@ -1,17 +1,36 @@
-# Welcome to MkDocs
+# R-Type
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+R-Type is a game created using the SFML library.
 
-## Commands
+## Installation
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+To install the necessary dependencies, use the following command:
 
-## Project layout
+```bash
+./install_requirement.sh
+```
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Compilation
+
+To compile the R-Type project, execute the following command:
+
+```bash
+./compile.sh
+```
+
+## Authors
+
+- Jacques
+- Matthis
+- Antoine
+- Louis
+
+## Project Documentation
+
+For detailed project documentation, including developer documentation, architectural diagrams, main system overviews, and tutorials, please visit our [**Documentation Website**](https://your-documentation-website.com). This website provides a practical, well-structured resource for new developers looking to understand our project.
+
+## Network Protocol Documentation
+
+To understand the communication protocol in our network game, please refer to the [**RFC Document**](https://github.com/EpitechPromo2026/B-CPP-500-LYN-5-1-rtype-jacques.marques/rfc). This document describes the various commands and packets exchanged between the server and the client. It's designed to enable anyone to develop a new client for our server by reading the protocol documentation.
+
+We appreciate your interest in R-Type and welcome you to our project. If you have any questions or need assistance, please don't hesitate to contact our team. Thank you for considering R-Type!

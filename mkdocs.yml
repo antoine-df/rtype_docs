@@ -1,1 +1,6 @@
 site_name: My Docs
+site_url: https://antoine-df.github.io/rtype_docs/
+nav:
+    - Home: index.md
+    - About: about.md
+theme: readthedocs
