@@ -8,5 +8,6 @@ nav:
     - Character Guide: characterGuide.md
     - Level Guide: levelGuide.md
     - Tips and Tricks: tipsAndTricks.md
+    - Diagram: digram.md
     - About: about.md
 theme: readthedocs
