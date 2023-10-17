@@ -1,4 +1,4 @@
-# R-Type
+# R-Type 👾
 
 R-Type is a game created using the SFML library.
 

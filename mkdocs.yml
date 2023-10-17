@@ -1,8 +1,12 @@
 site_name: r-type
 site_url: https://antoine-df.github.io/rtype_docs/
 nav:
-    - Home: index.md
+    - Getting started : index.md
     - Dev documentation : devDoc.md
     - Protocol documentation : protocolDoc.md
+    - Game Mechanics: gameMechanics.md
+    - Character Guide: characterGuide.md
+    - Level Guide: levelGuide.md
+    - Tips and Tricks: tipsAndTricks.md
     - About: about.md
 theme: readthedocs
