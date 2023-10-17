@@ -40,7 +40,7 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                <li class="toctree-l1"><a class="reference internal" href="..">Getting started</a>
                 </li>
               </ul>
               <ul>
@@ -49,6 +49,80 @@
               </ul>
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">Protocol documentation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#abstract">Abstract</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-introduction">1. Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-message-header">2. Message Header</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-udp-communication">3. UDP Communication</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#31-advantages-and-limitations">3.1. Advantages and Limitations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#32-udp-message-format">3.2. UDP Message Format</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#33-server-side-udp-data-reception-and-deserialization">3.3. Server-Side UDP Data Reception and Deserialization</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#331-data-reception-via-udp">3.3.1. Data Reception via UDP</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#332-data-deserialization-for-udp">3.3.2. Data Deserialization for UDP</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-tcp-communication">4. TCP Communication</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#41-advantages-and-limitations">4.1. Advantages and Limitations</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#42-tcp-message-format">4.2. TCP Message Format</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#43-server-side-tcp-data-reception-and-deserialization">4.3. Server-Side TCP Data Reception and Deserialization</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#431-data-reception-via-tcp">4.3.1. Data Reception via TCP</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#432-data-deserialization-for-tcp">4.3.2. Data Deserialization for TCP</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-serializerdeserializer">5. Serializer/Deserializer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-security">6. Security</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-client-side-data-serialization-and-transmission">7. Client-Side Data Serialization and Transmission</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#71-serialization-for-udp">7.1. Serialization for UDP:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#72-sending-serialized-data-over-udp">7.2. Sending Serialized Data over UDP:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#73-serialization-for-tcp">7.3. Serialization for TCP:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#74-sending-serialized-data-over-tcp">7.4. Sending Serialized Data over TCP:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-conclusion">8. Conclusion</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gameMechanics/">Game Mechanics</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../characterGuide/">Character Guide</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../levelGuide/">Level Guide</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tipsAndTricks/">Tips and Tricks</a>
                 </li>
               </ul>
               <ul>
@@ -78,13 +152,176 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <p>protocol doc </p>
+                <h1 id="network-protocol-for-game-client-server-communication">Network Protocol for Game Client-Server Communication</h1>
+<p><strong>Status:</strong> Informational<br />
+<strong>Created by:</strong> Matthis, Jacques, Antoine, Louis<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Date:</strong> October 10, 2023</p>
+<h2 id="abstract">Abstract</h2>
+<p>This document presents a client-server communication protocol for the game "R-Type," utilizing a combination of UDP and TCP. The protocol facilitates the exchange of structured data between clients and the server through a custom serializer/deserializer.</p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The primary objective of this protocol is to streamline communication between a video game client and server while employing a custom serializer/deserializer. It is versatile, supporting both UDP for low-latency communication and TCP for reliability.</p>
+<h2 id="2-message-header">2. Message Header</h2>
+<p>All messages exchanged between the client and server adhere to a common structure. The message header encompasses the following elements:
+- <strong>Message Type:</strong> Binary
+- <strong>Message Size:</strong> 64 bits
+- <strong>Session Identifier:</strong> Connection ID</p>
+<h2 id="3-udp-communication">3. UDP Communication</h2>
+<h3 id="31-advantages-and-limitations">3.1. Advantages and Limitations</h3>
+<p>UDP-based communication is reserved for low-latency operations, including real-time player position updates.</p>
+<h3 id="32-udp-message-format">3.2. UDP Message Format</h3>
+<p>UDP messages conform to the common message header structure, followed by data specific to the message type.</p>
+<h3 id="33-server-side-udp-data-reception-and-deserialization">3.3. Server-Side UDP Data Reception and Deserialization</h3>
+<p>The server-side UDP data reception and deserialization process involves listening for incoming data from connected clients. The server uses a <code>while</code> loop to manage incoming data over the UDP protocol.</p>
+<h4 id="331-data-reception-via-udp">3.3.1. Data Reception via UDP</h4>
+<p>The server continuously listens for incoming data from UDP clients using the following code:</p>
+<pre><code class="language-cpp">while (this-&gt;_run) {
+    int bytes_received = recvfrom(this-&gt;_socket, buffer, BUFFER_STREAM_UDP, 0, (struct sockaddr *)&amp;from, (socklen_t *)&amp;from_length);
+
+    if (bytes_received == SOCKET_ERROR) {
+        #ifdef _WIN32
+            printf(&quot;recvfrom() failed with error %d\n&quot;, WSAGetLastError());
+        #else
+            perror(&quot;recvfrom() failed&quot;);
+        #endif
+        return;
+    }
+
+    // ...
+}
+</code></pre>
+<h4 id="332-data-deserialization-for-udp">3.3.2. Data Deserialization for UDP</h4>
+<p>The received data is then processed and deserialized using the <code>ReaderStream</code> and <code>Serializer</code> classes, similar to the TCP deserialization process. Key deserialization steps are as follows:</p>
+<pre><code class="language-cpp">oengine::opack::Serializer serializer;
+_stream-&gt;allocation_reader_stream(this-&gt;_buffer, this-&gt;_bytes_received);
+
+if (_stream-&gt;_completed) {
+    serializer.data(_stream-&gt;data());
+    _request_name = serializer &gt;&gt; _request_name;
+    _id = serializer &gt;&gt; _id;
+    //printf(&quot;Request Name: %s, Id: %d\n&quot;, request_name.c_str(), id);
+    serializer.clear();
+    _stream-&gt;clear();
+}
+</code></pre>
+<h3 id="4-tcp-communication">4. TCP Communication</h3>
+<h4 id="41-advantages-and-limitations">4.1. Advantages and Limitations</h4>
+<p>TCP-based communication is employed for operations necessitating reliability, such as authentication and transactions.</p>
+<h4 id="42-tcp-message-format">4.2. TCP Message Format</h4>
+<p>TCP messages adhere to the common message header structure, followed by data specific to the message type. TCP communication guarantees the preservation of message order.</p>
+<h3 id="43-server-side-tcp-data-reception-and-deserialization">4.3. Server-Side TCP Data Reception and Deserialization</h3>
+<p>The server-side TCP data reception and deserialization process involves listening for incoming data from connected clients. The server uses a <code>while</code> loop to manage incoming data over the TCP protocol.</p>
+<h4 id="431-data-reception-via-tcp">4.3.1. Data Reception via TCP</h4>
+<p>The server continuously receives data via a TCP connection using the following code:</p>
+<pre><code class="language-cpp">while (this-&gt;connected) {
+    try {
+        if ((r = recv(this-&gt;_csocket, buffer, BUFFER_STREAM_TCP, 0)) == 0) {
+            this-&gt;close_client();
+            break;
+        }
+        _stream-&gt;allocation_reader_stream(buffer, r);
+        _stream-&gt;dump();
+        if (_stream-&gt;_completed) 
+        {
+            // Deserialize the data
+            serializer.data(_stream-&gt;data());
+            request_name = serializer &gt;&gt; request_name;
+            id = serializer &gt;&gt; id;
+            printf(&quot;Request Name: %s, Id: %d\n&quot;, request_name.c_str(), id);
+
+            // Further processing of the deserialized data can be performed here
+
+            serializer.clear();
+            _stream-&gt;clear();
+        }
+    }
+    catch (std::exception e) {
+        this-&gt;close_client();
+    }
+}
+</code></pre>
+<h4 id="432-data-deserialization-for-tcp">4.3.2. Data Deserialization for TCP</h4>
+<p>The received data is then processed and deserialized using the <code>ReaderStream</code> and <code>Serializer</code> classes. Key deserialization steps are as follows:</p>
+<pre><code class="language-cpp">// Deserialize the data
+serializer.data(_stream-&gt;data());
+request_name = serializer &gt;&gt; request_name;
+id = serializer &gt;&gt; id;
+
+// Further processing of the deserialized data
+
+ can be performed here
+</code></pre>
+<h2 id="5-serializerdeserializer">5. Serializer/Deserializer</h2>
+<p>The custom serializer/deserializer, which is utilized to convert data to bytes and vice versa, is elaborated upon in the associated source code.</p>
+<h2 id="6-security">6. Security</h2>
+<p>The protocol includes a connection-level authentication system for UDP communication.</p>
+<h2 id="7-client-side-data-serialization-and-transmission">7. Client-Side Data Serialization and Transmission</h2>
+<p>This section provides an overview of how data is serialized and transmitted from the client to the server using both UDP and TCP. Examples of data serialization and transmission are presented for each protocol.</p>
+<h3 id="71-serialization-for-udp">7.1. Serialization for UDP:</h3>
+<p>Data serialization for UDP enables clients to prepare structured data for transmission. The following code snippet illustrates how data can be serialized:</p>
+<pre><code class="language-cpp">std::string requestName(&quot;OnConnection&quot;);
+int id = 10;
+oengine::opack::Serializer serializer(requestName.size() + 8);
+serializer &lt;&lt; requestName;
+serializer &lt;&lt; id;
+oengine::opack::byte *serializedData = serializer.data();
+size_t sizeDataSerialized = serializer.count_data(requestData);
+</code></pre>
+<h3 id="72-sending-serialized-data-over-udp">7.2. Sending Serialized Data over UDP:</h3>
+<p>After data serialization, clients can transmit the serialized data over the UDP protocol to the server. The following code demonstrates this process:</p>
+<pre><code class="language-cpp">int _socketClient = socket(AF_INET, SOCK_DGRAM, 0);
+if (_socketClient &lt; 0) {
+    perror(&quot;socket error&quot;);
+    return false;
+};
+memset(&amp;_serverAddr, 0, sizeof(_serverAddr));
+_serverAddr.sin_family = AF_INET;
+_serverAddr.sin_port = htons(_serverPort);
+if (inet_pton(AF_INET, _serverIP.c_str(), &amp;_serverAddr.sin_addr) &lt;= 0) {
+    perror(&quot;inet_pton error&quot;);
+    return false;
+}
+ssize_t bytesSent = sendto(_socketClient, data, size, 0, (struct sockaddr*)&amp;_serverAddr, sizeof(_serverAddr));
+</code></pre>
+<h3 id="73-serialization-for-tcp">7.3. Serialization for TCP:</h3>
+<p>For data transmission over TCP, the client must first serialize the data. The code snippet below illustrates how data can be serialized for TCP transmission:</p>
+<pre><code class="language-cpp">std::string requestName(&quot;OnConnection&quot;);
+int id = 10;
+oengine::opack::Serializer serializer(requestName.size() + 8);
+serializer &lt;&lt; requestName;
+serializer &lt;&lt; id;
+oengine::opack::byte *requestData = serializer.data();
+size_t sizeData = serializer.count_data(requestData);
+</code></pre>
+<h3 id="74-sending-serialized-data-over-tcp">7.4. Sending Serialized Data over TCP:</h3>
+<p>Once the data is properly serialized, clients establish a TCP connection with the server and transmit the data. The following code demonstrates this process:</p>
+<pre><code class="language-cpp">if ((socketClient = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+    perror(&quot;socket error&quot;);
+    exit(O_EXIT_FAILURE);
+}
+struct sockaddr_in addressClient;
+addressClient.sin_family = AF_INET;
+addressClient.sin_port = htons(serverPort);
+if (inet_pton(AF_INET, serverIP.c_str(), &amp;addressClient.sin_addr) &lt;= 0) {
+    perror(&quot;inet_pton error&quot;);
+    exit(O_EXIT_FAILURE);
+}
+if (connect(socketClient, (struct sockaddr *)&amp;addressClient, sizeof(addressClient)) &lt; 0) {
+    perror(&quot;connect error&quot;);
+    exit(O_EXIT_FAILURE);
+}
+std::cout &lt;&lt; &quot;Connected to the server&quot; &lt;&lt; std::endl;
+write(socketClient, requestData, sizeData);
+</code></pre>
+<p>This client-side data serialization and transmission process is essential for sending structured information to the server, enabling the client to communicate effectively within the game network.</p>
+<h2 id="8-conclusion">8. Conclusion</h2>
+<p>This client-server communication protocol, which combines UDP and TCP, serves as a robust foundation for communication within a video game environment. Specific details, including message types, supported operations, and security measures, should be tailored to suit the game's unique requirements. The protocol facilitates efficient data exchange between clients and the server, contributing to a seamless gaming experience.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../devDoc/" class="btn btn-neutral float-left" title="Dev documentation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../about/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../gameMechanics/" class="btn btn-neutral float-right" title="Game Mechanics">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -110,7 +347,7 @@
       <span><a href="../devDoc/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../about/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../gameMechanics/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

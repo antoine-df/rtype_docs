@@ -11,12 +11,32 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://antoine-df.github.io/rtype_docs/characterGuide/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://antoine-df.github.io/rtype_docs/devDoc/</loc>
          <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://antoine-df.github.io/rtype_docs/gameMechanics/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://antoine-df.github.io/rtype_docs/levelGuide/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://antoine-df.github.io/rtype_docs/protocolDoc/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://antoine-df.github.io/rtype_docs/tipsAndTricks/</loc>
          <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
