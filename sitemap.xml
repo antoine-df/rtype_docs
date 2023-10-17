@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://antoine-df.github.io/rtype_docs/diagram/</loc>
+         <lastmod>2023-10-17</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://antoine-df.github.io/rtype_docs/gameMechanics/</loc>
          <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
