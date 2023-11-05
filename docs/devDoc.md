@@ -1,1 +1,1 @@
-Here is our documentation [**Dev documentation**](https://github.com/louisbdc/hosting_doxygen_doc/blob/main/html/index.html). 
+Here is our documentation [**Dev documentation**](https://louisbdc.github.io/hosting_doxygen_doc.github.io/index.htmlhttps://louisbdc.github.io/hosting_doxygen_doc.github.io/index.html). 
